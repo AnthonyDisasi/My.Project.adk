@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using My.Project.adk.DataContext;
+using My.Project.adk.Infrastructure;
 using My.Project.adk.Models;
 
 namespace My.Project.adk
@@ -23,6 +24,8 @@ namespace My.Project.adk
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddTransient<IPasswordValidator<User_pro>, CustomPasswordValidator>();
+            services.AddTransient<IUserValidator<User_pro>, CustomUserValidator>();
             services.AddDbContext<ProjectDbContext>(options => options.UseSqlServer(this.Configuration.GetConnectionString("DbProj")));
             services.AddIdentity<User_pro, IdentityRole>().AddEntityFrameworkStores<ProjectDbContext>();
             services.AddControllers();
