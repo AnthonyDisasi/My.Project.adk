@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using My.Project.adk.DataContext;
@@ -9,6 +10,7 @@ using My.Project.adk.Models;
 namespace My.Project.adk.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class ElevesController : ControllerBase
     {

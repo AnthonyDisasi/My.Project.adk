@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 namespace My.Project.adk.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class AccountController : ControllerBase
     {
@@ -36,6 +37,7 @@ namespace My.Project.adk.Controllers
         }
 
         [HttpGet]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult<IEnumerable<User_pro>>> GetUser()
         {
             return await context.User_Pros.ToListAsync();
@@ -65,6 +67,7 @@ namespace My.Project.adk.Controllers
         }
 
         [HttpPut("{id}")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> PutUser(string id, User_pro user)
         {
             if (id != user.ID)
@@ -93,6 +96,7 @@ namespace My.Project.adk.Controllers
         }
 
         [HttpDelete("{id}")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeletUser(string id)
         {
             var user = await context.User_Pros.FindAsync(id);
@@ -108,6 +112,7 @@ namespace My.Project.adk.Controllers
         }
 
         [HttpGet("{id}")]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult<User_pro>> GetUser(string id)
         {
             var user = await context.User_Pros.FindAsync(id);

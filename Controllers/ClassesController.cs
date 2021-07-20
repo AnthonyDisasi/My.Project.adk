@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using My.Project.adk.DataContext;
@@ -9,6 +10,7 @@ using My.Project.adk.Models;
 namespace My.Project.adk.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class ClassesController : ControllerBase
     {
@@ -20,12 +22,14 @@ namespace My.Project.adk.Controllers
         }
 
         [HttpGet]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult<IEnumerable<Classe>>> GetClasse()
         {
             return await _context.Classe.ToListAsync();
         }
 
         [HttpGet("{id}")]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult<Classe>> GetClasse(string id)
         {
             var classe = await _context.Classe.FindAsync(id);
@@ -39,6 +43,7 @@ namespace My.Project.adk.Controllers
         }
 
         [HttpPut("{id}")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> PutClasse(string id, Classe classe)
         {
             if (id != classe.ID)
@@ -68,6 +73,7 @@ namespace My.Project.adk.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult<Classe>> PostClasse(Classe classe)
         {
             _context.Classe.Add(classe);
