@@ -63,7 +63,6 @@ namespace My.Project.adk.Controllers
                     throw;
                 }
             }
-
             return NoContent();
         }
 
