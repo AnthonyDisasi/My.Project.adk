@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace My.Project.adk.DbFolder
 {
-    public class DbProject : DbContext
+    public class DbProject : IdentityDbContext<User_pro>
     {
         public DbProject(DbContextOptions options) : base(options){ }
         public DbSet<Ecole> Ecole { get; set; }
