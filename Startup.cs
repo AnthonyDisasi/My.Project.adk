@@ -1,20 +1,13 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using My.Project.adk.DbFolder;
+using My.Project.adk.DataContext;
 using My.Project.adk.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace My.Project.adk
 {
@@ -30,8 +23,8 @@ namespace My.Project.adk
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<DbProject>(options => options.UseSqlServer(this.Configuration.GetConnectionString("DbProj")));
-            services.AddIdentity<User_pro, IdentityRole>().AddEntityFrameworkStores<DbProject>();
+            services.AddDbContext<ProjectDbContext>(options => options.UseSqlServer(this.Configuration.GetConnectionString("DbProj")));
+            services.AddIdentity<User_pro, IdentityRole>().AddEntityFrameworkStores<ProjectDbContext>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

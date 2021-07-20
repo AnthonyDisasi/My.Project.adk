@@ -3,17 +3,15 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using My.Project.adk.DbFolder;
+using My.Project.adk.DataContext;
 
 namespace My.Project.adk.Migrations
 {
-    [DbContext(typeof(DbProject))]
-    [Migration("20210720125521__init_2")]
-    partial class _init_2
+    [DbContext(typeof(ProjectDbContext))]
+    partial class ProjectDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -209,7 +207,13 @@ namespace My.Project.adk.Migrations
                     b.Property<DateTime>("DateNaissaince")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Matricule")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Nom")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Postnom")

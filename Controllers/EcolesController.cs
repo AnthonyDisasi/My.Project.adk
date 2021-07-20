@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using My.Project.adk.DbFolder;
+using My.Project.adk.DataContext;
 using My.Project.adk.Models;
 
 namespace My.Project.adk.Controllers
@@ -14,9 +12,9 @@ namespace My.Project.adk.Controllers
     [ApiController]
     public class EcolesController : ControllerBase
     {
-        private readonly DbProject _context;
+        private readonly ProjectDbContext _context;
 
-        public EcolesController(DbProject context)
+        public EcolesController(ProjectDbContext context)
         {
             _context = context;
         }

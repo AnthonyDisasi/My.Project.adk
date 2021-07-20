@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using My.Project.adk.DbFolder;
+using My.Project.adk.DataContext;
 using My.Project.adk.Models;
 
 namespace My.Project.adk.Controllers
@@ -12,9 +12,9 @@ namespace My.Project.adk.Controllers
     [ApiController]
     public class ElevesController : ControllerBase
     {
-        private readonly DbProject _context;
+        private readonly ProjectDbContext _context;
 
-        public ElevesController(DbProject context)
+        public ElevesController(ProjectDbContext context)
         {
             _context = context;
         }

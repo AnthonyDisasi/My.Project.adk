@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using My.Project.adk.DbFolder;
+using My.Project.adk.DataContext;
 using My.Project.adk.Models;
 using System;
 using System.Collections.Generic;
@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace My.Project.adk.Infrastructure
 {
-    public class CustomPasswordValidator : PasswordValidator<DbProject>
+    public class CustomPasswordValidator : PasswordValidator<User_pro>
     {
-        public override async Task<IdentityResult> ValidateAsync(UserManager<DbProject> manager, DbProject user, string password)
+        public override async Task<IdentityResult> ValidateAsync(UserManager<User_pro> manager, User_pro user, string password)
         {
             IdentityResult result = await base.ValidateAsync(manager, user, password);
             List<IdentityError> errors = result.Succeeded ?

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace My.Project.adk.Migrations
 {
-    public partial class _init_2 : Migration
+    public partial class _init_ : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -44,6 +44,20 @@ namespace My.Project.adk.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Ecole",
+                columns: table => new
+                {
+                    ID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Nom = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Adresse = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateCreation = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Ecole", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -152,6 +166,51 @@ namespace My.Project.adk.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Classe",
+                columns: table => new
+                {
+                    ID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    EcoleID = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Niveau = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AnneeScolaire = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Sexe = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Classe", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Classe_Ecole_EcoleID",
+                        column: x => x.EcoleID,
+                        principalTable: "Ecole",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Eleve",
+                columns: table => new
+                {
+                    ID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ClasseID = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Nom = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Postnom = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Matricule = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Sexe = table.Column<int>(type: "int", nullable: true),
+                    DateNaissaince = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Eleve", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Eleve_Classe_ClasseID",
+                        column: x => x.ClasseID,
+                        principalTable: "Classe",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -190,6 +249,16 @@ namespace My.Project.adk.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Classe_EcoleID",
+                table: "Classe",
+                column: "EcoleID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Eleve_ClasseID",
+                table: "Eleve",
+                column: "ClasseID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -210,10 +279,19 @@ namespace My.Project.adk.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Eleve");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Classe");
+
+            migrationBuilder.DropTable(
+                name: "Ecole");
         }
     }
 }

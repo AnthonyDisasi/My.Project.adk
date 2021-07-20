@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using My.Project.adk.DbFolder;
+using My.Project.adk.DataContext;
 using My.Project.adk.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -11,9 +11,9 @@ namespace My.Project.adk.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
-        private readonly DbProject _context;
+        private readonly ProjectDbContext _context;
 
-        public AccountController(DbProject context)
+        public AccountController(ProjectDbContext context)
         {
             context = _context;
         }

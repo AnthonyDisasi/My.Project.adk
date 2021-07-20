@@ -6,11 +6,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace My.Project.adk.DbFolder
+namespace My.Project.adk.DataContext
 {
-    public class DbProject : IdentityDbContext<User_pro>
+    public class ProjectDbContext : IdentityDbContext<User_pro>
     {
-        public DbProject(DbContextOptions options) : base(options){ }
+        public ProjectDbContext(DbContextOptions options) : base(options) { }
         public DbSet<Ecole> Ecole { get; set; }
         public DbSet<Classe> Classe { get; set; }
         public DbSet<Eleve> Eleve { get; set; }
