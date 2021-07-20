@@ -15,6 +15,7 @@ namespace My.Project.adk.DbFolder
         public DbSet<Classe> Classe { get; set; }
         public DbSet<Eleve> Eleve { get; set; }
 
+        public DbSet<User_pro> User_Pros { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

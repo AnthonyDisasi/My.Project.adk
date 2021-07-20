@@ -18,6 +18,8 @@ namespace My.Project.adk.Models
         public string Nom { get; set; }
         public string Postnom { get; set; }
 
+        public string Matricule { get; set; }
+        public string Password { get; set; }
 
         [EnumDataType(typeof(Sexe))]
         public Sexe? Sexe { get; set; }
