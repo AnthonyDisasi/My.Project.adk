@@ -1,133 +1,51 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using My.Project.adk.DataContext;
 using My.Project.adk.Models;
-using System;
+using My.Project.adk.Services;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace My.Project.adk.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize]
     [ApiController]
     public class AccountController : ControllerBase
     {
-        private UserManager<User_pro> userManager;
-        private SignInManager<User_pro> signInManager;
-        private readonly ProjectDbContext context; 
-        private IUserValidator<User_pro> userValidator;
-        private IPasswordValidator<User_pro> passwordValidator;
-        private IPasswordHasher<User_pro> passwordHasher;
+        private readonly IAccountService accountService;
+        private readonly UserManager<User_pro> userManager;
 
-        public AccountController(UserManager<User_pro> userMgr,
-        SignInManager<User_pro> signinMgr,
-        ProjectDbContext _context,
-        IUserValidator<User_pro> userValid,
-        IPasswordValidator<User_pro> passValid,
-        IPasswordHasher<User_pro> passwordHash)
+        public AccountController(IAccountService accountService_,
+            UserManager<User_pro> usrMgr)
         {
-            userManager = userMgr;
-            signInManager = signinMgr;
-            context = _context;
+            accountService = accountService_;
+            userManager = usrMgr;
         }
 
         [HttpGet]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult<IEnumerable<User_pro>>> GetUser()
         {
-            return await context.User_Pros.ToListAsync();
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult<User_pro>> PostUser(User_pro user)
-        {
-                IdentityResult result = await userManager.CreateAsync(user, user.Password);
-                if (result.Succeeded)
-                {
-                    user = await userManager.FindByEmailAsync(user.Email);
-                    context.Add(user);
-                    await context.SaveChangesAsync();
-                    return user;
-                }
-                else
-                {
-                    foreach (IdentityError error in result.Errors)
-                    {
-                        ModelState.AddModelError("", error.Description);
-                    }
-                }
-            
-            return NoContent();
-        }
-
-        [HttpPut("{id}")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> PutUser(string id, User_pro user)
-        {
-            if (id != user.ID)
-            {
-                return BadRequest();
-            }
-
-            context.Entry(user).State = EntityState.Modified;
-
-            try
-            {
-                await context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!UserExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-            return NoContent();
-        }
-
-        [HttpDelete("{id}")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeletUser(string id)
-        {
-            var user = await context.User_Pros.FindAsync(id);
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            context.User_Pros.Remove(user);
-            await context.SaveChangesAsync();
-
-            return NoContent();
+            return await accountService.Get();
         }
 
         [HttpGet("{id}")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult<User_pro>> GetUser(string id)
         {
-            var user = await context.User_Pros.FindAsync(id);
-
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            return user;
+            return await accountService.Get(id);
         }
 
-        private bool UserExists(string id)
+        [HttpPost]
+        public async Task<ActionResult<UserModel>> PostClasse(UserModel user_)
         {
-            return context.User_Pros.Any(u => u.ID == id);
+            User_pro user = new User_pro
+            {
+                UserName = user_.Username,
+                Email = user_.Email
+            };
+            await userManager.CreateAsync(user, user_.Password);
+
+            return CreatedAtAction("GetClasse", new { id = user.Id }, user);
         }
     }
 }

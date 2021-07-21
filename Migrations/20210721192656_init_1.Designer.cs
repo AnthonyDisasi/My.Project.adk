@@ -10,8 +10,8 @@ using My.Project.adk.DataContext;
 namespace My.Project.adk.Migrations
 {
     [DbContext(typeof(ProjectDbContext))]
-    [Migration("20210720155818__init_")]
-    partial class _init_
+    [Migration("20210721192656_init_1")]
+    partial class init_1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -167,14 +167,14 @@ namespace My.Project.adk.Migrations
                     b.Property<string>("Niveau")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("Sexe")
+                    b.Property<int?>("Section")
                         .HasColumnType("int");
 
                     b.HasKey("ID");
 
                     b.HasIndex("EcoleID");
 
-                    b.ToTable("Classe");
+                    b.ToTable("Classes");
                 });
 
             modelBuilder.Entity("My.Project.adk.Models.Ecole", b =>
@@ -194,7 +194,7 @@ namespace My.Project.adk.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Ecole");
+                    b.ToTable("Ecoles");
                 });
 
             modelBuilder.Entity("My.Project.adk.Models.Eleve", b =>
@@ -215,9 +215,6 @@ namespace My.Project.adk.Migrations
                     b.Property<string>("Nom")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Password")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Postnom")
                         .HasColumnType("nvarchar(max)");
 
@@ -228,7 +225,7 @@ namespace My.Project.adk.Migrations
 
                     b.HasIndex("ClasseID");
 
-                    b.ToTable("Eleve");
+                    b.ToTable("Eleves");
                 });
 
             modelBuilder.Entity("My.Project.adk.Models.User_pro", b =>

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace My.Project.adk.Migrations
 {
-    public partial class _init_ : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -47,7 +47,7 @@ namespace My.Project.adk.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Ecole",
+                name: "Ecoles",
                 columns: table => new
                 {
                     ID = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -57,7 +57,7 @@ namespace My.Project.adk.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Ecole", x => x.ID);
+                    table.PrimaryKey("PK_Ecoles", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -167,7 +167,7 @@ namespace My.Project.adk.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Classe",
+                name: "Classes",
                 columns: table => new
                 {
                     ID = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -178,17 +178,17 @@ namespace My.Project.adk.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Classe", x => x.ID);
+                    table.PrimaryKey("PK_Classes", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Classe_Ecole_EcoleID",
+                        name: "FK_Classes_Ecoles_EcoleID",
                         column: x => x.EcoleID,
-                        principalTable: "Ecole",
+                        principalTable: "Ecoles",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Eleve",
+                name: "Eleves",
                 columns: table => new
                 {
                     ID = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -202,11 +202,11 @@ namespace My.Project.adk.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Eleve", x => x.ID);
+                    table.PrimaryKey("PK_Eleves", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Eleve_Classe_ClasseID",
+                        name: "FK_Eleves_Classes_ClasseID",
                         column: x => x.ClasseID,
-                        principalTable: "Classe",
+                        principalTable: "Classes",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -251,13 +251,13 @@ namespace My.Project.adk.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Classe_EcoleID",
-                table: "Classe",
+                name: "IX_Classes_EcoleID",
+                table: "Classes",
                 column: "EcoleID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Eleve_ClasseID",
-                table: "Eleve",
+                name: "IX_Eleves_ClasseID",
+                table: "Eleves",
                 column: "ClasseID");
         }
 
@@ -279,7 +279,7 @@ namespace My.Project.adk.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Eleve");
+                name: "Eleves");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -288,10 +288,10 @@ namespace My.Project.adk.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Classe");
+                name: "Classes");
 
             migrationBuilder.DropTable(
-                name: "Ecole");
+                name: "Ecoles");
         }
     }
 }

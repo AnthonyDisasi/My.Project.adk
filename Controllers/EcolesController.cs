@@ -1,43 +1,32 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using My.Project.adk.DataContext;
 using My.Project.adk.Models;
+using My.Project.adk.Services;
 
 namespace My.Project.adk.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize]
     [ApiController]
     public class EcolesController : ControllerBase
     {
-        private readonly ProjectDbContext _context;
+        private readonly IEcoleService _ecoleService;
 
-        public EcolesController(ProjectDbContext context)
+        public EcolesController(IEcoleService ecoleService)
         {
-            _context = context;
+            _ecoleService = ecoleService;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Ecole>>> GetEcole()
         {
-            return await _context.Ecole.ToListAsync();
+            return await _ecoleService.Get();
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Ecole>> GetEcole(string id)
         {
-            var ecole = await _context.Ecole.FindAsync(id);
-
-            if (ecole == null)
-            {
-                return NotFound();
-            }
-
-            return ecole;
+            return await _ecoleService.Get(id);
         }
 
         [HttpPut("{id}")]
@@ -48,54 +37,27 @@ namespace My.Project.adk.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(ecole).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!EcoleExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
+            await _ecoleService.Update(ecole);
             return NoContent();
         }
 
         [HttpPost]
-        public async Task<ActionResult<Ecole>> PostEcole(Ecole ecole)
+        public async Task<ActionResult<Ecole>> PostEcole(Ecole ecole_)
         {
-            _context.Ecole.Add(ecole);
-            await _context.SaveChangesAsync();
-
+            var ecole = await _ecoleService.Create(ecole_);
             return CreatedAtAction("GetEcole", new { id = ecole.ID }, ecole);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteEcole(string id)
         {
-            var ecole = await _context.Ecole.FindAsync(id);
+            var ecole = await _ecoleService.Get(id);
             if (ecole == null)
             {
                 return NotFound();
             }
-
-            _context.Ecole.Remove(ecole);
-            await _context.SaveChangesAsync();
-
+            await _ecoleService.Delete(ecole.ID);
             return NoContent();
-        }
-
-        private bool EcoleExists(string id)
-        {
-            return _context.Ecole.Any(e => e.ID == id);
         }
     }
 }

@@ -19,7 +19,7 @@ namespace My.Project.adk.Models
         public string Niveau { get; set; }
         public string AnneeScolaire { get; set; }
         [EnumDataType(typeof(Section))]
-        public Section? Sexe { get; set; }
+        public Section? Section { get; set; }
 
         public Ecole Ecole { get; set; }
         public ICollection<Eleve> Eleves { get; set; }

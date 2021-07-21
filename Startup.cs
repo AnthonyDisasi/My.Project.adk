@@ -9,6 +9,7 @@ using Microsoft.OpenApi.Models;
 using My.Project.adk.DataContext;
 using My.Project.adk.Infrastructure;
 using My.Project.adk.Models;
+using My.Project.adk.Services;
 
 namespace My.Project.adk
 {
@@ -24,10 +25,17 @@ namespace My.Project.adk
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddTransient<IEleveService, EleveService>();
+            services.AddTransient<IEcoleService, EcoleService>();
+            services.AddTransient<IClasseService, ClasseService>();
+            services.AddTransient<IAccountService, AccountService>();
+
+            services.AddIdentity<User_pro, IdentityRole>().AddEntityFrameworkStores<ProjectDbContext>();
+
             services.AddTransient<IPasswordValidator<User_pro>, CustomPasswordValidator>();
             services.AddTransient<IUserValidator<User_pro>, CustomUserValidator>();
             services.AddDbContext<ProjectDbContext>(options => options.UseSqlServer(this.Configuration.GetConnectionString("DbProj")));
-            services.AddIdentity<User_pro, IdentityRole>().AddEntityFrameworkStores<ProjectDbContext>();
+            
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

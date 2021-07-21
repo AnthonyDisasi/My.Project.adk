@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using My.Project.adk.DataContext;
 using My.Project.adk.Models;
 using System.Collections.Generic;
 using System.Linq;

@@ -2,7 +2,7 @@
 
 namespace My.Project.adk.Migrations
 {
-    public partial class _init_1 : Migration
+    public partial class init_2 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

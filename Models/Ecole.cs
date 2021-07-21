@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace My.Project.adk.Models
 {
@@ -15,6 +13,7 @@ namespace My.Project.adk.Models
 
         public string Nom { get; set; }
         public string Adresse { get; set; }
+
         [DataType(DataType.Date)]
         public DateTime DateCreation { get; set; }
 

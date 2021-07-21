@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using My.Project.adk.DataContext;
 
 namespace My.Project.adk.Migrations
 {
     [DbContext(typeof(ProjectDbContext))]
-    partial class ProjectDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210721191820_init")]
+    partial class init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -165,7 +167,7 @@ namespace My.Project.adk.Migrations
                     b.Property<string>("Niveau")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("Section")
+                    b.Property<int?>("Sexe")
                         .HasColumnType("int");
 
                     b.HasKey("ID");
@@ -211,6 +213,9 @@ namespace My.Project.adk.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nom")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Postnom")
